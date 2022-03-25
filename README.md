@@ -12,3 +12,4 @@ The list of keys to interact with the program:
 perspective.
 - r + e: move backward, forward
 - b: bedroom view
+- c: car view
