@@ -10,6 +10,176 @@
 #include <iostream>
 #pragma warning(disable:4996)
 
+void carfront()
+{
+	glColor3f(0.372549, 0.623529, 0.623529);
+	glPushMatrix();
+	glTranslatef(-525, -250, 0);
+	glScalef(0.01, 0.3, 0.85);
+	glDisable(GL_LIGHTING);
+	glutSolidCube(600);
+	glEnable(GL_LIGHTING);
+	glColor3f(1, 1, 1);
+	glutWireCube(600);
+	glPopMatrix();
+
+	glColor3f(1, 1, 1);
+	glPushMatrix();
+	glTranslatef(-410, -70, 0);
+	glRotatef(-50, 0, 0, 1);
+	glScalef(0.005, 0.49, 0.85);
+	glutWireCube(600);
+	glPopMatrix();
+}
+
+void carback()
+{
+	glColor3f(0.372549, 0.623529, 0.623529);
+	glPushMatrix();
+	glTranslatef(502, -250, 0);
+	glScalef(0.01, 0.3, 0.85);
+	glDisable(GL_LIGHTING);
+	glutSolidCube(600);
+	glEnable(GL_LIGHTING);
+	glColor3f(1, 1, 1);
+	glutWireCube(600);
+	glPopMatrix();
+
+	glColor3f(0.372549, 0.623529, 0.623529);
+	glPushMatrix();
+	glTranslatef(465, -80, 0);
+	glRotatef(20, 0, 0, 1);
+	glScalef(0.01, 0.35, 0.85);
+	glDisable(GL_LIGHTING);
+	glutSolidCube(600);
+	glEnable(GL_LIGHTING);
+	glColor3f(1, 1, 1);
+	glutWireCube(600);
+	glPopMatrix();
+}
+
+void cartop()
+{
+	glColor3f(0.372549, 0.623529, 0.623529);
+	glPushMatrix();
+	glTranslatef(65, 20, 0);
+	glScalef(1.2, 0.01, 0.85);
+	glDisable(GL_LIGHTING);
+	glutSolidCube(600);
+	glEnable(GL_LIGHTING);
+	glColor3f(1, 1, 1);
+	glutWireCube(600);
+	glPopMatrix();
+}
+
+void carbottom()
+{
+	glColor3f(0.372549, 0.623529, 0.623529);
+	glPushMatrix();
+	glTranslatef(-10, -350, 0);
+	glScalef(1.73, 0.01, 0.85);
+	glDisable(GL_LIGHTING);
+	glutSolidCube(600);
+	glEnable(GL_LIGHTING);
+	glColor3f(1, 1, 1);
+	glutWireCube(600);
+	glPopMatrix();
+
+	glColor3f(0, 0, 0);
+	glPushMatrix();
+	glTranslatef(0, -330, 0);
+	glScalef(1.7, 0.01, 0.85);
+	glDisable(GL_LIGHTING);
+	glutSolidCube(590);
+	glEnable(GL_LIGHTING);
+	glPopMatrix();
+}
+
+void carleft()
+{
+	glColor3f(0.372549, 0.623529, 0.623529);
+	glPushMatrix();
+	glTranslatef(-10, -250, 250);
+	glScalef(1.73, 0.3, 0.01);
+	glDisable(GL_LIGHTING);
+	glutSolidCube(600);
+	glEnable(GL_LIGHTING);
+	glColor3f(1, 1, 1);
+	glutWireCube(600);
+	glPopMatrix();
+}
+
+void carright()
+{
+	glColor3f(0.372549, 0.623529, 0.623529);
+	glPushMatrix();
+	glTranslatef(-10, -250, -250);
+	glScalef(1.73, 0.3, 0.01);
+	glDisable(GL_LIGHTING);
+	glutSolidCube(600);
+	glEnable(GL_LIGHTING);
+	glColor3f(1, 1, 1);
+	glutWireCube(600);
+	glPopMatrix();
+}
+
+void carwheel(float x, float y, float z)
+{
+	float th;
+	glColor3f(1, 0, 1);
+	for (int j = 0; j < 50; j += 10) {
+
+		glBegin(GL_POLYGON);
+		for (int i = 0; i < 360; i++)
+		{
+			th = i * 3.142 / 180;
+			glVertex3f(x + 70 * cos(th), y + 70 * sin(th), z + j);
+		}
+		glEnd();
+	}
+}
+
+void carborder()
+{
+	glColor3f(1, 0, 0);
+	glPushMatrix();
+	glTranslatef(0, -160, 250);
+	glScalef(0.01, 0.6, 0.01);
+	glutSolidCube(600);
+	glColor3f(1, 1, 1);
+	glutWireCube(600);
+	glPopMatrix();
+
+	glColor3f(1, 0, 0);
+	glPushMatrix();
+	glTranslatef(0, -160, -250);
+	glScalef(0.01, 0.6, 0.01);
+	glutSolidCube(600);
+	glColor3f(1, 1, 1);
+	glutWireCube(600);
+	glPopMatrix();
+}
+
+void car()
+{
+	glPushMatrix();
+	glTranslated(-1.5, 1.8, 3);
+	glScaled(0.0015, 0.0035, 0.0015);
+	glRotated(90, 0, 1, 0);
+	carfront();
+	carback();
+	cartop();
+	carbottom();
+	carleft();
+	carright();
+	carwheel(-300, -400, 200);
+	carwheel(350, -400, 200);
+	carwheel(-300, -400, -200);
+	carwheel(350, -400, -200);
+	carborder();
+	glPopMatrix();
+}
+
 void drawCloset()
 {
 	glPushMatrix();
@@ -677,6 +847,7 @@ void compound(void)
 	wall(0.08);
 	glPopMatrix();
 	gate();
+	car();
 	sgate();
 	glFlush();
 }
@@ -1817,6 +1988,16 @@ void Keyboard(unsigned char key, int x, int y)
 		look[2] = 1;
 		break;
 		//bedroom view
+	case 'c':
+	case 'C':
+		view[0] = -3.5;
+		view[1] = 2;
+		view[2] = 4;
+		look[0] = 3.8;
+		look[1] = 2;
+		look[2] = 1;
+		break;
+		//car view
 	case 'T':
 	case 't':
 		view[0] = 6;
