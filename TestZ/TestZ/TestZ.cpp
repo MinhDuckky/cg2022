@@ -10,6 +10,51 @@
 #include <iostream>
 #pragma warning(disable:4996)
 
+GLuint makeaTree;
+float x, y, z;
+
+void makeCylinder(float height, float base) {
+	GLUquadric* obj = gluNewQuadric();
+	//gluQuadricDrawStyle(obj, GLU_LINE);
+	glColor3f(0.64f, 0.16, 0.16f);glPushMatrix();
+	glRotatef(-90, 1.0, 0.0, 0.0);
+	gluCylinder(obj, base, base - (0.2 * base), height, 20, 20);
+	glPopMatrix();
+	glutSwapBuffers();
+}
+
+void makeTree(float height, float base) {
+
+	float angle;
+	makeCylinder(height, base); 
+	glTranslatef(0.0, height, 0.0);
+	height -= height * .2; base -= base * 0.3;
+	for (int a = 0; a < 3; a++) {
+		angle = rand() % 50 + 20;
+		if (angle > 48)
+			angle = -(rand() % 50 + 20);
+		if (height > 1) {
+			glPushMatrix();
+			if (a == 1) {
+				glRotatef(angle, 1, 1, -1);
+			}
+			if (a == 1) {
+				glRotatef(angle, 1, 1, -1);
+			}
+			glRotatef(angle, 1, 1, 1);
+			makeTree(height, base);
+			glPopMatrix();
+
+		}
+		else {
+			glPushMatrix();
+			glColor3f(0.0, 1.0 / a, 0.0);
+			glutSolidSphere(.2, 10, 10); //add like fruits...
+			glPopMatrix();
+		}
+	}
+}
+
 void carfront()
 {
 	glColor3f(0.372549, 0.623529, 0.623529);
@@ -625,6 +670,10 @@ void init() {
 	for (loop = 0; loop < MAX_PARTICLES; loop++) {
 		initParticles(loop);
 	}
+	makeaTree = glGenLists(1);
+	glNewList(makeaTree, GL_COMPILE);
+	makeTree(3.6, 0.4);
+	glEndList();
 }
 
 // For Rain
@@ -714,7 +763,7 @@ void steps(void);
 void window(void);
 void sgate(void);
 void gate(void);
-double angle = 0, speed = 5, maino = 0, romo = 0, tro = 0, mgo = 0, sgo = 0;
+double angle = 0, speed = 10, maino = 0, romo = 0, tro = 0, mgo = 0, sgo = 0;
 //declarating quadric objects
 GLUquadricObj* Cylinder;
 GLUquadricObj* Disk;
@@ -848,6 +897,13 @@ void compound(void)
 	glPopMatrix();
 	gate();
 	car();
+	glPushMatrix();
+	glTranslated(-2.7, 0.5, 3);
+	glScaled(0.1, 0.2, 0.1);
+	glDisable(GL_LIGHTING);
+	glCallList(makeaTree);
+	glEnable(GL_LIGHTING);
+	glPopMatrix();
 	sgate();
 	glFlush();
 }
